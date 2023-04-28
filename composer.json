@@ -1,0 +1,52 @@
+{
+    "name": "nazaryuzhyn/laravel-comments",
+    "description": "Comments to Laravel application",
+    "keywords": [
+        "laravel",
+        "comments",
+        "laravel-comments"
+    ],
+    "homepage": "https://github.com/nazaryuzhyn/laravel-comments",
+    "type": "library",
+    "require": {
+        "php": "^8.0|^8.1|^8.2",
+        "laravel/framework": "^8.0|^9.0|^10.0",
+        "illuminate/support": "^8.0|^9.0|^10.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0|^8.0|9.2.*|^9.5.10",
+        "orchestra/testbench": "^3.6|^5.0|^6.0|^7.0|^8.0",
+        "illuminated/testing-tools": "^8.1|^9.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "nazaryuzhyn",
+            "email": "nazaryuzhyn@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Comments\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Comments\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Comments\\CommentsServiceProvider"
+            ]
+        }
+    }
+}

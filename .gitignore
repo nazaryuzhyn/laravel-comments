@@ -1,0 +1,9 @@
+vendor
+docs
+build
+.idea
+.vscode
+.phpunit.result.cache
+coverage
+coverage.clover
+composer.lock
