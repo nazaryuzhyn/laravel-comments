@@ -2,6 +2,7 @@
 
 namespace Comments\Models\Scopes;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -20,5 +21,15 @@ trait CommentScope
     public function scopeDisapproved(Builder $query): Builder
     {
         return $query->where('is_approved', '=', false);
+    }
+
+    public function scopeToday(Builder $query): Builder
+    {
+        return $query->whereDate('created_at', '=', Carbon::today());
+    }
+
+    public function scopeBeforeToday(Builder $query): Builder
+    {
+        return $query->whereDate('created_at', '<', Carbon::today());
     }
 }
