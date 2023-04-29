@@ -11,9 +11,9 @@ namespace Comments\Contracts;
 interface Commentator
 {
     /**
-     * Check if a comment for a specific model needs to be approved.
+     * Check if a comment for a specific model needs to be auto approved.
      *
      * @return bool
      */
-    public function isNeedsCommentApproval(): bool;
+    public function commentApproved(): bool;
 }

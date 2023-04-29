@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
- * Trait HasComments.
+ * Trait Commentable.
  *
  * @author Nazar Yuzhyn <nazaryuzhyn@gmail.com>
  * @package Comments\Traits
@@ -51,7 +51,7 @@ trait Commentable
             'commentable_type' => get_class(),
             'user_id' => is_null($user) ? null : $user->getKey(),
             'comment' => $comment,
-            'is_approved' => ($user instanceof Commentator) ? !$user->isNeedsCommentApproval() : false,
+            'is_approved' => $user instanceof Commentator && $user->commentApproved(),
         ]);
 
         return $this->comments()->save($comment);
