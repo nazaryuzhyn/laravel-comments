@@ -88,7 +88,7 @@ class CommentsTest extends TestCase
             'title' => 'Test Article'
         ]);
 
-        $comment = $article->comment('this is a comment');
+        $comment = $article->comment('This is a comment...');
 
         $this->assertSame($user->toArray(), $comment->commentator->toArray());
     }
@@ -107,7 +107,7 @@ class CommentsTest extends TestCase
             'title' => 'Test Article'
         ]);
 
-        $comment = $article->commentFromUser($user, 'this is a comment');
+        $comment = $article->commentFromUser($user, 'This is a comment...');
 
         $this->assertSame($user->toArray(), $comment->commentator->toArray());
     }
@@ -126,7 +126,7 @@ class CommentsTest extends TestCase
             'title' => 'Test Article'
         ]);
 
-        $comment = $article->comment('this is a comment');
+        $comment = $article->comment('This is a comment...');
 
         $this->assertFalse($comment->is_approved);
 
@@ -149,7 +149,7 @@ class CommentsTest extends TestCase
             'title' => 'Test Article'
         ]);
 
-        $comment = $article->comment('this is a comment');
+        $comment = $article->comment('This is a comment...');
 
         $this->assertSame($comment->commentable->id, $article->id);
         $this->assertSame($comment->commentable->title, $article->title);
@@ -169,7 +169,7 @@ class CommentsTest extends TestCase
             'title' => 'Test Article'
         ]);
 
-        $comment = $article->commentFromUser($user, 'this is a comment');
+        $comment = $article->commentFromUser($user, 'This is a comment...');
 
         $this->assertTrue($comment->is_approved);
     }
@@ -188,12 +188,12 @@ class CommentsTest extends TestCase
             'title' => 'Test Article'
         ]);
 
-        $article->comment('this comment is not approved');
-        $article->commentFromUser($user, 'this comment is approved');
+        $article->comment('This comment is not approved');
+        $article->commentFromUser($user, 'This comment is approved');
 
         $this->assertCount(2, $article->comments);
         $this->assertCount(1, $article->comments()->approved()->get());
 
-        $this->assertSame('this comment is approved', $article->comments()->approved()->first()->comment);
+        $this->assertSame('This comment is approved', $article->comments()->approved()->first()->comment);
     }
 }

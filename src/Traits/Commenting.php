@@ -11,19 +11,26 @@ namespace Comments\Traits;
 trait Commenting
 {
     /**
-     * Needs comment approval.
-     *
-     * @var bool
-     */
-    protected bool $needsCommentApproval = false;
-
-    /**
-     * Check if a comment for a specific model needs to be approved.
+     * Check if a comment for a specific model needs to be auto approved.
      *
      * @return bool
      */
-    public function isNeedsCommentApproval(): bool
+    public function commentApproved(): bool
     {
-        return $this->needsCommentApproval;
+        if ($this->shouldBeAutoCommentApproval()) {
+            return $this->autoCommentApproval;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if auto comment approval.
+     *
+     * @return bool
+     */
+    protected function shouldBeAutoCommentApproval(): bool
+    {
+        return isset($this->autoCommentApproval);
     }
 }

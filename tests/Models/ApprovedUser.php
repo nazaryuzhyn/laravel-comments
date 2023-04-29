@@ -18,5 +18,5 @@ class ApprovedUser extends User implements Commentator
 
     protected $table = 'users';
 
-    protected bool $needsCommentApproval = false;
+    protected bool $autoCommentApproval = true;
 }
