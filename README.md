@@ -34,7 +34,7 @@ In your terminal type:
 
 This command that will be published file with config `config/comments.php`.
 
-See the [full configuration file](https://github.com/nazaryuzhyn/laravel-comments/blob/main/src/config/comments.php)
+See the [full configuration file](https://github.com/nazaryuzhyn/laravel-comments/blob/main/config/comments.php)
 for more information.
 
 ### Register the Package
@@ -130,16 +130,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements Commentator
 {
     use Commenting;
-    
-    public bool $needsCommentApproval = false;
-    
+
+    protected bool $autoCommentApproval = true;
+
     // ...
 }
 
 ```
 
-The needsCommentApproval property received the model instance that you want to add a comment to, 
-and you can either return true to mark the comment as not approved, or return false to mark the comment as approved.
+The autoCommentApproval property is intended to specify whether comments should be automatically approved, 
+and you can either return true to mark the comment as approved or false to mark the comment as unapproved.
 
 ### Retrieving Comments
 
@@ -156,7 +156,13 @@ $comments = $article->comments;
 $approved = $article->comments()->approved()->get();
 
 // Retrieve only disapproved comments
-$approved = $article->comments()->disapproved()->get();
+$disapproved = $article->comments()->disapproved()->get();
+
+// Retrieve only for today comments
+$commentsForToday = $article->comments()->forToday()->get();
+
+// Retrieve only before today comments
+$commentsBeforeToday = $article->comments()->beforeToday()->get();
 
 ```
 
@@ -171,4 +177,4 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
