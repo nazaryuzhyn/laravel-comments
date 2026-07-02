@@ -13,8 +13,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Laravel 11 is omitted: it is EOL for security and its releases are flagged
+        # by security advisories, which Composer 2.10+ blocks by default during install.
         php: [ '8.2', '8.3', '8.4', '8.5' ]
-        laravel: [ '11.*', '12.*', '13.*' ]
+        laravel: [ '12.*', '13.*' ]
         exclude:
           # Laravel 13 requires PHP >= 8.3
           - php: '8.2'
