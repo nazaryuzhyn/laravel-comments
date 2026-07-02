@@ -6,7 +6,6 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Schema\Blueprint;
 use Comments\CommentsServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminated\Testing\TestingTools;
 
 /**
  * Class TestCase.
@@ -16,13 +15,13 @@ use Illuminated\Testing\TestingTools;
  */
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
-    use TestingTools;
     use RefreshDatabase;
 
     public function setUp(): void
     {
         parent::setUp();
 
+        $this->loadLaravelMigrations(['--database' => 'sqlite']);
         $this->setUpEnvironment($this->app);
         $this->setUpDatabase($this->app);
         $this->createUser();
@@ -49,8 +48,14 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function setUpEnvironment($app): void
     {
-        $app['config']->set('app.key', 'base64:6Cu/ozj4gPtIjmXjr8EdVnGFNsdRqZfHfVjQkmTlg4Y=');
         $app['config']->set('auth.providers.users.model', User::class);
+        $app['config']->set('database.default', 'sqlite');
+        $app['config']->set('database.connections.sqlite', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
+        $app['config']->set('app.key', 'base64:6Cu/ozj4gPtIjmXjr8EdVnGFNsdRqZfHfVjQkmTlg4Y=');
     }
 
     /**
@@ -65,23 +70,11 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 
         (new \CreateCommentsTable())->up();
 
-        $app['db']->connection()
-            ->getSchemaBuilder()
-            ->create('users', static function (Blueprint $table) {
-                $table->id();
-                $table->string('name');
-                $table->string('email')->unique();
-                $table->string('password');
-                $table->timestamps();
-            });
-
-        $app['db']->connection()
-            ->getSchemaBuilder()
-            ->create('articles', static function (Blueprint $table) {
-                $table->id();
-                $table->string('title');
-                $table->timestamps();
-            });
+        $this->app['db']->connection()->getSchemaBuilder()->create('posts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+            $table->timestamps();
+        });
     }
 
     /**

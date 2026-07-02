@@ -48,7 +48,7 @@ trait Commentable
 
         $comment = new $commentModel([
             'commentable_id' => $this->getKey(),
-            'commentable_type' => get_class(),
+            'commentable_type' => get_class($this),
             'user_id' => is_null($user) ? null : $user->getKey(),
             'comment' => $comment,
             'is_approved' => $user instanceof Commentator && $user->commentApproved(),
