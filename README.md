@@ -2,6 +2,14 @@
 
 Comments package for Laravel.
 
+## Requirements
+
+* PHP 8.2, 8.3, 8.4 or 8.5
+* Laravel 11, 12 or 13
+
+> `2.x` targets Laravel 11/12/13 and PHP 8.2–8.5. Support for PHP 8.1 has been dropped;
+> if you are still on PHP 8.1, stay on the `1.x` release line.
+
 ### Features
 
 * Simple package to use and install
@@ -159,7 +167,7 @@ $approved = $article->comments()->approved()->get();
 $disapproved = $article->comments()->disapproved()->get();
 
 // Retrieve only for today comments
-$commentsForToday = $article->comments()->forToday()->get();
+$commentsForToday = $article->comments()->today()->get();
 
 // Retrieve only before today comments
 $commentsBeforeToday = $article->comments()->beforeToday()->get();

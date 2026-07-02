@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Comments;
 
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -54,14 +58,25 @@ class CommentsServiceProvider extends ServiceProvider
      */
     protected function publishesMigration(): void
     {
-        if (!class_exists('CreateCommentsTable')) {
-            $migration = database_path(
-                'migrations/' . date('Y_m_d_His', time()) . '_create_comments_table.php'
-            );
+        $this->publishes([
+            __DIR__.'/../database/migrations/create_comments_table.php.stub' => $this->getMigrationFileName(),
+        ], 'migrations');
+    }
 
-            $this->publishes([
-                __DIR__.'/../database/migrations/create_comments_table.php.stub' => $migration,
-            ], 'migrations');
-        }
+    /**
+     * Resolve the migration file name, reusing an already published file if present.
+     *
+     * @return string
+     */
+    protected function getMigrationFileName(): string
+    {
+        $timestamp = date('Y_m_d_His');
+
+        $filesystem = $this->app->make(Filesystem::class);
+
+        return Collection::make([database_path('migrations') . DIRECTORY_SEPARATOR])
+            ->flatMap(fn (string $path): array => (array) $filesystem->glob($path . '*_create_comments_table.php'))
+            ->push(database_path('migrations') . DIRECTORY_SEPARATOR . $timestamp . '_create_comments_table.php')
+            ->first();
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Comments\Traits;
 
 use Comments\Contracts\Commentator;

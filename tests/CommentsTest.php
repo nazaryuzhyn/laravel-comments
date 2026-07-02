@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Comments\Tests;
 
 use Comments\Tests\Models\ApprovedUser;
 use Comments\Tests\Models\Article;
 use Illuminate\Foundation\Auth\User;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class CommentsTest.
@@ -17,9 +20,9 @@ class CommentsTest extends TestCase
     /**
      * Users without commentator interface do not get approved.
      *
-     * @test
      * @return void
      */
+    #[Test]
     public function usersWithoutCommentatorInterfaceDoNotGetApproved(): void
     {
         $article = Article::query()->create([
@@ -36,9 +39,9 @@ class CommentsTest extends TestCase
     /**
      * Models can store comments.
      *
-     * @test
      * @return void
      */
+    #[Test]
     public function modelsCanStoreComments(): void
     {
         $article = Article::query()->create([
@@ -57,9 +60,9 @@ class CommentsTest extends TestCase
     /**
      * Comments without users have no relation.
      *
-     * @test
      * @return void
      */
+    #[Test]
     public function commentsWithoutUsersHaveNoRelation(): void
     {
         $article = Article::query()->create([
@@ -75,9 +78,9 @@ class CommentsTest extends TestCase
     /**
      * Comments can be posted as authenticated users.
      *
-     * @test
      * @return void
      */
+    #[Test]
     public function commentsCanBePostedAsAuthenticatedUsers(): void
     {
         $user = User::query()->first();
@@ -96,9 +99,9 @@ class CommentsTest extends TestCase
     /**
      * Comments can be posted as different users.
      *
-     * @test
      * @return void
      */
+    #[Test]
     public function commentsCanBePostedAsDifferentUsers(): void
     {
         $user = User::first();
@@ -115,9 +118,9 @@ class CommentsTest extends TestCase
     /**
      * Comments can be approved.
      *
-     * @test
      * @return void
      */
+    #[Test]
     public function commentsCanBeApproved(): void
     {
         $user = User::first();
@@ -138,9 +141,9 @@ class CommentsTest extends TestCase
     /**
      * Comments resolve the commented model.
      *
-     * @test
      * @return void
      */
+    #[Test]
     public function commentsResolveCommentedModel(): void
     {
         $user = User::first();
@@ -158,9 +161,9 @@ class CommentsTest extends TestCase
     /**
      * Users can be auto approved.
      *
-     * @test
      * @return void
      */
+    #[Test]
     public function usersCanBeAutoApproved(): void
     {
         $user = ApprovedUser::query()->first();
@@ -177,9 +180,9 @@ class CommentsTest extends TestCase
     /**
      * Comments have an approved scope.
      *
-     * @test
      * @return void
      */
+    #[Test]
     public function commentsHaveAnApprovedScope(): void
     {
         $user = ApprovedUser::first();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Comments\Tests;
 
 use Illuminate\Foundation\Auth\User;
@@ -66,12 +68,12 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function setUpDatabase($app): void
     {
-        include_once __DIR__ . '/../database/migrations/create_comments_table.php.stub';
+        $migration = include __DIR__ . '/../database/migrations/create_comments_table.php.stub';
 
-        (new \CreateCommentsTable())->up();
+        $migration->up();
 
-        $this->app['db']->connection()->getSchemaBuilder()->create('posts', function (Blueprint $table) {
-            $table->increments('id');
+        $this->app['db']->connection()->getSchemaBuilder()->create('articles', function (Blueprint $table) {
+            $table->id();
             $table->string('title');
             $table->timestamps();
         });

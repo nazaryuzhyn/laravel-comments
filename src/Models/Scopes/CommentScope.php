@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Comments\Models\Scopes;
 
 use Carbon\Carbon;
